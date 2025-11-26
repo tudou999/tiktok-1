@@ -1,0 +1,11 @@
+{
+  "code": 200,
+  "msg": "ok",
+  "data": {
+    "id": 10,
+    "name": "新建文件夹",
+    "type": "folder",
+    "parentId": 1,
+    "createTime": "2025-11-03 09:00:00"
+  }
+}

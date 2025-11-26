@@ -1,0 +1,25 @@
+{
+  "code": 200,
+  "msg": "ok",
+  "data": {
+    "pageNum": 1,
+    "pageSize": 10,
+    "total": 2,
+    "list": [
+      {
+        "id": 1,
+        "email": "admin@example.com",
+        "nickname": "管理员",
+        "role": "ADMIN",
+        "createTime": "2025-10-01 10:00:00"
+      },
+      {
+        "id": 2,
+        "email": "user@example.com",
+        "nickname": "普通用户",
+        "role": "USER",
+        "createTime": "2025-10-02 10:00:00"
+      }
+    ]
+  }
+}

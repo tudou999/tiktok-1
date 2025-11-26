@@ -1,0 +1,10 @@
+{
+  "code": 200,
+  "msg": "ok",
+  "data": {
+    "id": 2,
+    "email": "new@example.com",
+    "nickname": "新用户",
+    "role": "USER"
+  }
+}

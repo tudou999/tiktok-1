@@ -1,0 +1,12 @@
+{
+  "code": 200,
+  "msg": "ok",
+  "data": {
+    "id": 1,
+    "email": "test@example.com",
+    "nickname": "测试用户",
+    "role": "USER",
+    "token": "Bearer mock-token-123456",
+    "expireAt": "2025-12-01 00:00:00"
+  }
+}

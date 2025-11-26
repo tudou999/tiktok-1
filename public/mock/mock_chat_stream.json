@@ -1,0 +1,13 @@
+{
+  "code": 200,
+  "msg": "ok",
+  "data": {
+    "delay": 120,
+    "chunks": [
+      "您好，我是 Mock 助理，很高兴为您演示！\n",
+      "这里的回复来自 public/mock/mock_chat_stream.json。\n",
+      "您可以在本地无需后端即可体验流式输出效果。",
+      "[DONE]"
+    ]
+  }
+}

@@ -1,0 +1,165 @@
+{
+  "code": 200,
+  "msg": "ok",
+  "data": {
+    "pageNum": 1,
+    "pageSize": 100,
+    "total": 22,
+    "list": [
+      {
+        "id": 101,
+        "sessionId": 1,
+        "role": "user",
+        "content": "你好，系统有什么功能？",
+        "createTime": "2025-11-01 10:00:00"
+      },
+      {
+        "id": 102,
+        "sessionId": 1,
+        "role": "assistant",
+        "content": "您好！本系统集成了智能对话、文件管理、知识库问答等核心功能。您可以上传文档进行分析，也可以直接与我聊天。",
+        "createTime": "2025-11-01 10:01:00"
+      },
+      {
+        "id": 103,
+        "sessionId": 1,
+        "role": "user",
+        "content": "文件支持什么格式？",
+        "createTime": "2025-11-01 10:02:00"
+      },
+      {
+        "id": 104,
+        "sessionId": 1,
+        "role": "assistant",
+        "content": "目前支持常见的文本格式，包括 PDF、Word (docx)、Markdown (md)、TXT 以及 Excel 表格等。",
+        "createTime": "2025-11-01 10:03:00"
+      },
+      {
+        "id": 105,
+        "sessionId": 1,
+        "role": "user",
+        "content": "那能处理图片吗？",
+        "createTime": "2025-11-01 10:04:00"
+      },
+      {
+        "id": 106,
+        "sessionId": 1,
+        "role": "assistant",
+        "content": "支持的。具备 OCR 文字识别功能，您可以上传包含文字的图片，我会提取其中的信息进行分析。",
+        "createTime": "2025-11-01 10:05:00"
+      },
+      {
+        "id": 107,
+        "sessionId": 1,
+        "role": "user",
+        "content": "上传的文件安全吗？",
+        "createTime": "2025-11-01 10:06:00"
+      },
+      {
+        "id": 108,
+        "sessionId": 1,
+        "role": "assistant",
+        "content": "请放心，所有上传的文件都会经过加密存储，并且严格控制访问权限。系统定期进行安全审计，保障您的数据隐私。",
+        "createTime": "2025-11-01 10:07:00"
+      },
+      {
+        "id": 109,
+        "sessionId": 1,
+        "role": "user",
+        "content": "对话记录会保存多久？",
+        "createTime": "2025-11-01 10:08:00"
+      },
+      {
+        "id": 110,
+        "sessionId": 1,
+        "role": "assistant",
+        "content": "默认情况下，您的对话记录会永久保存，除非您手动删除。您可以在侧边栏查看历史会话。",
+        "createTime": "2025-11-01 10:09:00"
+      },
+      {
+        "id": 111,
+        "sessionId": 1,
+        "role": "user",
+        "content": "如何开始一个新的话题？",
+        "createTime": "2025-11-01 10:10:00"
+      },
+      {
+        "id": 112,
+        "sessionId": 1,
+        "role": "assistant",
+        "content": "点击左侧边栏顶部的“新对话”按钮，或者直接在输入框输入新内容，我会自动为您创建新的会话上下文。",
+        "createTime": "2025-11-01 10:11:00"
+      },
+      {
+        "id": 113,
+        "sessionId": 1,
+        "role": "user",
+        "content": "支持代码高亮吗？",
+        "createTime": "2025-11-01 10:12:00"
+      },
+      {
+        "id": 114,
+        "sessionId": 1,
+        "role": "assistant",
+        "content": "支持的。例如：\n```javascript\nconsole.log('Hello World');\n```\n代码块会自动进行语法高亮显示。",
+        "createTime": "2025-11-01 10:13:00"
+      },
+      {
+        "id": 115,
+        "sessionId": 1,
+        "role": "user",
+        "content": "看起来不错，有夜间模式吗？",
+        "createTime": "2025-11-01 10:14:00"
+      },
+      {
+        "id": 116,
+        "sessionId": 1,
+        "role": "assistant",
+        "content": "有的，系统界面支持深色模式，会跟随您的系统设置自动切换，或者您可以在设置中手动开启。",
+        "createTime": "2025-11-01 10:15:00"
+      },
+      {
+        "id": 117,
+        "sessionId": 1,
+        "role": "user",
+        "content": "如果我有建议去哪里反馈？",
+        "createTime": "2025-11-01 10:16:00"
+      },
+      {
+        "id": 118,
+        "sessionId": 1,
+        "role": "assistant",
+        "content": "您可以点击界面右下角的“反馈”按钮，填写您的意见或建议。我们非常重视您的反馈！",
+        "createTime": "2025-11-01 10:17:00"
+      },
+      {
+        "id": 119,
+        "sessionId": 1,
+        "role": "user",
+        "content": "响应速度挺快的。",
+        "createTime": "2025-11-01 10:18:00"
+      },
+      {
+        "id": 120,
+        "sessionId": 1,
+        "role": "assistant",
+        "content": "谢谢夸奖！我们使用了最新的流式传输技术，确保您能第一时间看到回复内容。",
+        "createTime": "2025-11-01 10:19:00"
+      },
+      {
+        "id": 121,
+        "sessionId": 1,
+        "role": "user",
+        "content": "好的，我先去试用一下文件上传。",
+        "createTime": "2025-11-01 10:20:00"
+      },
+      {
+        "id": 122,
+        "sessionId": 1,
+        "role": "assistant",
+        "content": "好的，祝您使用愉快！如果在过程中遇到任何问题，随时来问我。",
+        "createTime": "2025-11-01 10:21:00"
+      }
+    ]
+  }
+}

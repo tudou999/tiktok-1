@@ -1,0 +1,25 @@
+{
+  "code": 200,
+  "msg": "ok",
+  "data": {
+    "pageNum": 1,
+    "pageSize": 10,
+    "total": 2,
+    "list": [
+      {
+        "id": 201,
+        "sessionId": 2,
+        "role": "user",
+        "content": "Vue3 的生命周期有哪些？",
+        "createTime": "2025-11-02 09:30:00"
+      },
+      {
+        "id": 202,
+        "sessionId": 2,
+        "role": "assistant",
+        "content": "Vue3 的生命周期钩子主要包括：\n- `onBeforeMount`: 在组件挂载之前调用。\n- `onMounted`: 在组件挂载之后调用。\n- `onBeforeUpdate`: 在组件更新之前调用。\n- `onUpdated`: 在组件更新之后调用。\n- `onBeforeUnmount`: 在组件卸载之前调用。\n- `onUnmounted`: 在组件卸载之后调用。\n\n此外还有 `onActivated`, `onDeactivated`, `onErrorCaptured` 等。",
+        "createTime": "2025-11-02 09:30:10"
+      }
+    ]
+  }
+}

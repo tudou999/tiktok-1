@@ -1,0 +1,32 @@
+{
+  "code": 200,
+  "msg": "ok",
+  "data": {
+    "pageNum": 1,
+    "pageSize": 10,
+    "total": 3,
+    "list": [
+      {
+        "id": 101,
+        "sessionId": 1,
+        "role": "user",
+        "content": "你好，帮我介绍一下系统功能。",
+        "createTime": "2025-11-01 10:01:00"
+      },
+      {
+        "id": 102,
+        "sessionId": 1,
+        "role": "assistant",
+        "content": "好的，本系统支持文件管理、聊天记录浏览等功能。",
+        "createTime": "2025-11-01 10:01:10"
+      },
+      {
+        "id": 103,
+        "sessionId": 1,
+        "role": "user",
+        "content": "再详细一点。",
+        "createTime": "2025-11-01 10:01:30"
+      }
+    ]
+  }
+}

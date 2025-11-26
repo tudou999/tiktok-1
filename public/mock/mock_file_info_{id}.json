@@ -1,0 +1,14 @@
+{
+  "code": 200,
+  "msg": "ok",
+  "data": {
+    "id": 2,
+    "name": "示例报告.pdf",
+    "type": "file",
+    "parentId": 0,
+    "size": 102400,
+    "path": "/files/sample-report.pdf",
+    "createTime": "2025-11-01 10:05:00",
+    "updateTime": "2025-11-01 10:05:00"
+  }
+}
