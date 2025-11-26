@@ -4,6 +4,80 @@ import { ElMessage } from "element-plus";
 
 const BASE_URL = "/api/v1";
 
+// In-memory state for sessions to simulate persistence during runtime
+let inMemorySessions = null;
+
+const handleGetSessions = async () => {
+  if (!inMemorySessions) {
+    const response = await loadMockJson("mock_session_list.json");
+    inMemorySessions = response?.data || [];
+  }
+  return {
+    code: 200,
+    msg: "ok",
+    data: inMemorySessions,
+  };
+};
+
+const handleCreateSession = async (config) => {
+  if (!inMemorySessions) await handleGetSessions();
+  
+  const title = config.params?.title || "新对话";
+  const newId = Math.max(...inMemorySessions.map(s => s.id), 0) + 1;
+  const newSession = {
+    id: newId,
+    title,
+    createTime: new Date().toLocaleString(),
+    updateTime: new Date().toLocaleString(),
+    lastMessage: ""
+  };
+  
+  inMemorySessions.unshift(newSession);
+  
+  return {
+    code: 200,
+    msg: "ok",
+    data: newId
+  };
+};
+
+const handleRenameSession = async (config) => {
+  if (!inMemorySessions) await handleGetSessions();
+  
+  const id = Number(config.params?.id);
+  const title = config.params?.title;
+  
+  const session = inMemorySessions.find(s => s.id === id);
+  if (session) {
+    session.title = title;
+    session.updateTime = new Date().toLocaleString();
+  }
+  
+  return {
+    code: 200,
+    msg: "ok",
+    data: null
+  };
+};
+
+const handleDeleteSession = async (config) => {
+  if (!inMemorySessions) await handleGetSessions();
+  
+  // Extract ID from URL: /session/123
+  const match = config.url.match(/\/session\/(\d+)$/);
+  const id = match ? Number(match[1]) : null;
+  
+  if (id) {
+    inMemorySessions = inMemorySessions.filter(s => s.id !== id);
+  }
+  
+  return {
+    code: 200,
+    msg: "ok",
+    data: null
+  };
+};
+
 const MOCK_ROUTE_CONFIGS = [
   {
     method: "post",
@@ -29,23 +103,22 @@ const MOCK_ROUTE_CONFIGS = [
   {
     method: "get",
     pattern: /^\/session$/,
-    file: "mock_session_list.json",
+    handler: handleGetSessions,
   },
   {
     method: "post",
     pattern: /^\/session$/,
-    file: "mock_session_create.json",
-    transform: (payload) => adaptSessionCreate(payload),
+    handler: handleCreateSession,
   },
   {
     method: "put",
     pattern: /^\/session$/,
-    file: "mock_session_rename.json",
+    handler: handleRenameSession,
   },
   {
     method: "delete",
     pattern: /^\/session\/[^/]+$/,
-    file: "mock_session_delete.json",
+    handler: handleDeleteSession,
   },
   {
     method: "get",
@@ -159,6 +232,25 @@ const findMockRoute = (config) => {
 };
 
 const buildMockAdapter = (route, config) => {
+  // If route has a custom handler, use it instead of file loading
+  if (route.handler) {
+    return async () => {
+      try {
+        const data = await route.handler(config);
+        return {
+          data,
+          status: 200,
+          statusText: "OK",
+          headers: config.headers,
+          config,
+        };
+      } catch (error) {
+        console.error("Mock handler error:", error);
+        return Promise.reject(error);
+      }
+    };
+  }
+
   const mockPath = ensureLeadingSlash(
     route.resolvePath ? route.resolvePath(config) : route.file,
   );

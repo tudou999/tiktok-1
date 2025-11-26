@@ -41,34 +41,36 @@
               <el-input
                 ref="refInput"
                 v-model="chat.title"
-                size="default"
-                placeholder="请输入新标题"
+                size="small"
+                placeholder="新标题"
                 clearable
                 @keydown.enter.stop.prevent="confirmRename(chat)"
                 :disabled="renamingId && renamingId !== chat.id"
                 class="rename-input"
               />
-              <el-button
-                type="primary"
-                size="small"
-                @click.stop="confirmRename(chat)"
-                :loading="renamingId === chat.id"
-                :disabled="renamingId && renamingId !== chat.id"
-                class="rename-confirm-btn"
-              >
-                <el-icon><Check /></el-icon>
-              </el-button>
-              <el-button
-                size="small"
-                @click.stop="cancelRename(chat)"
-                :disabled="renamingId && renamingId !== chat.id"
-                class="rename-cancel-btn"
-              >
-                <el-icon><Close /></el-icon>
-              </el-button>
+              <div class="rename-actions">
+                <el-button
+                  style="padding: 5px 0"
+                  type="primary"
+                  size="small"
+                  @click.stop="confirmRename(chat)"
+                  :loading="renamingId === chat.id"
+                  :disabled="renamingId && renamingId !== chat.id"
+                >
+                  <el-icon style="margin: 0"><Check /></el-icon>
+                </el-button>
+                <el-button
+                  style="padding: 5px 0"
+                  size="small"
+                  @click.stop="cancelRename(chat)"
+                  :disabled="renamingId && renamingId !== chat.id"
+                >
+                  <el-icon style="margin: 0"><Close /></el-icon>
+                </el-button>
+              </div>
             </div>
 
-            <span class="actions" @click.stop>
+            <span class="actions" @click.stop v-if="chat.editing === 0">
               <el-dropdown size="large" trigger="click">
                 <el-button
                   :disabled="isAnyEditing && chat.editing === 0"
@@ -385,6 +387,28 @@ onMounted(() => {
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
+        }
+
+        .rename-editing {
+          flex: 1;
+          display: flex !important;
+          flex-direction: row !important;
+          align-items: center;
+          gap: 0.25rem;
+          width: 100%;
+          overflow: hidden;
+
+          .rename-input {
+            flex: 1;
+            width: auto;
+            min-width: 50px;
+          }
+
+          .rename-actions {
+            display: flex;
+            gap: 0;
+            flex-shrink: 0;
+          }
         }
       }
     }
