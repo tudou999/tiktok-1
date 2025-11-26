@@ -400,7 +400,7 @@ onBeforeUnmount(() => {
             :autosize="{ minRows: 1, maxRows: 6 }"
             v-model="userInput"
             @keydown.enter.prevent="startStream(userInput)"
-            placeholder="给 CORS 发送消息"
+            placeholder="给 TikTok-Chat 发送消息"
             resize="none"
           />
           <el-switch

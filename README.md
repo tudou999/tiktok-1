@@ -1,44 +1,115 @@
-# tiktok-1
 
-This template should help get you started developing with Vue 3 in Vite.
+# TikTok-Chat 前端
 
-## Recommended IDE Setup
+这是一个基于 **Vue 3 + Vite + Element Plus** 的前端项目，用于演示一个带会话管理的 AI 聊天界面。
+- 注：老师您好！这个项目是从我另外一个项目改造过来的，所以现在有点“阉割”，可能会让体验感差一点，如果要看我完整的项目，请访问：https://github.com/tudou999/project_gdgs_frontend 。如果需要后端的支持，请在飞书联系我，我可以提供后端的容器！
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## 一、项目功能概述
 
-## Recommended Browser Setup
+- **用户登录**
+  - 使用邮箱 + 密码登录（通过 Mock 接口模拟校验）。
+  - 登录成功后自动跳转到 AI 聊天页面。
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+- **会话管理（左侧侧边栏）**
+  - 展示会话列表（聊天记录列表）。
+  - 支持：
+    - 新建会话
+    - 重命名会话（行内编辑，输入框 + 确认 / 取消按钮）
+    - 删除会话
+  - 使用内存 Mock 状态保存对会话标题和列表的修改，在当前运行期间有效。
 
-## Customize configuration
+- **对话记录与分页（右侧主区域）**
+  - 展示当前选中会话的消息列表。
+  - 点击不同会话会加载对应的对话消息。
+  - 向上滚动到顶部时自动加载更多历史消息（分页加载）。
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- **AI 聊天体验**
+  - 底部输入框支持多行输入（回车发送），并提供发送按钮。
+  - 支持“本地 / 在线”模式切换（通过开关切换 `mode` 参数）。
+  - 使用打字机效果实现流式输出。
+  - 开发环境下，聊天接口会从 Mock 数据中返回流式内容，无需真实后端即可体验效果。
 
-## Project Setup
+- **消息展示增强**
+  - AI 回复支持 Markdown 渲染与代码高亮（highlight.js）。
+  - 支持复制用户消息和 AI 消息内容。
+  - 用户消息支持“重新生成”功能（将这条提问再次发送）。
+
+## 二、运行环境要求
+
+- Node.js：`^20.19.0` 或 `>=22.12.0`
+- npm（或兼容的包管理器）
+
+## 三、安装与运行指令
+
+在项目根目录执行以下命令。
+
+### 1. 安装依赖
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### 2. 启动开发环境
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+启动成功后，按照终端提示在浏览器访问（通常为）：
+
+```text
+http://localhost:5173
+```
+
+### 3. 构建生产环境代码
 
 ```sh
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+打包产物默认输出到 `dist/` 目录，可配合任意静态服务器部署。
+
+### 4. 预览打包结果
+
+```sh
+npm run preview
+```
+
+该命令会以本地静态服务器的方式预览 `dist/` 内容，方便检查打包结果。
+
+### 5. 代码检查与格式化
+
+- 使用 ESLint 自动修复：
 
 ```sh
 npm run lint
 ```
+
+- 使用 Prettier 格式化 `src/` 下代码：
+
+```sh
+npm run format
+```
+
+## 四、Mock 行为说明（开发环境）
+
+- 所有以 `/api/v1` 开头的接口在开发环境下会被 Axios 拦截，根据 URL 和 Method 匹配到 `public/mock/` 中的 JSON 文件或内存处理函数。
+- 会话相关接口（列表 / 创建 / 重命名 / 删除）使用内存变量保存状态：
+  - 首次从 `mock_session_list.json` 读取初始数据。
+  - 之后的修改（重命名 / 删除 / 新建）只保存在当前运行周期的内存中。
+- 对话消息分页接口会根据 `sessionId` 加载不同的 `mock_message_page_{id}.json`，用于模拟不同会话的聊天记录。
+- 聊天流接口在开发模式下会从 Mock 文本/配置中以“分片”的形式返回数据，用于模拟真实的流式响应。
+
+## 五、技术栈
+
+- 框架：Vue 3（`<script setup>` 语法）
+- 构建工具：Vite
+- UI 组件：Element Plus
+- 状态管理：Pinia
+- 路由：Vue Router
+- HTTP 客户端：Axios
+- Markdown 渲染：marked + DOMPurify
+- 代码高亮：highlight.js
+
+如需接入真实后端，只需要按接口约定替换 Mock 配置，即可无缝切换到真实服务。
+
