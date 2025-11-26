@@ -113,3 +113,50 @@ npm run format
 
 如需接入真实后端，只需要按接口约定替换 Mock 配置，即可无缝切换到真实服务。
 
+## 六、整体设计思路
+
+- **单页应用 + 双栏布局**
+  - 顶层使用 `AIChat.vue` 作为主页面容器，左侧为会话列表，右侧通过 `<router-view>` 渲染聊天内容组件（默认是 `ChatRecord.vue`）。
+  - 通过固定高度 + 内层滚动容器的方式，保证在不同分辨率下都有稳定的布局体验。
+
+- **会话驱动的聊天模型**
+  - 页面核心状态是 `currentChatId`：
+    - 左侧点击会话菜单时更新 `currentChatId`；
+    - 右侧 `ChatRecord` 通过 `props.chatId` 响应变化并加载对应消息。
+  - 新建会话时暂时使用 `chatId = 0` 作为本地临时会话，真正发送第一条消息时再通过接口创建真实会话并回写 ID。
+
+- **解耦会话与消息**
+  - 会话列表：通过 `/session` 系列接口（Mock）维护，只关心 ID / 标题等元信息。
+  - 消息列表：通过 `/message/session/{id}/page` 接口分页获取，组件内部只依赖通用字段（`senderType`、`contents` 等），后端返回由适配层统一转换。
+
+- **以用户体验为中心的交互设计**
+  - 重命名采用行内编辑 + 图标按钮，避免额外弹窗打断流程。
+  - 聊天窗口自动滚动到底部，并在用户向上滚动查看历史时智能关闭“强制跟随”。
+  - 流式输出和代码高亮增强了 AI 回复的可读性与“智能感”。
+
+## 七、技术实现方案梳理
+
+- **路由与页面结构**
+  - 使用 Vue Router 管理路由，但聊天主界面实际上集中在 `AIChat.vue` + `ChatRecord.vue` 这两个核心组件中。
+  - 通过 `router-view` 的插槽形式给 `ChatRecord` 传递 `chat-id` 等参数，便于未来扩展成多种聊天视图。
+
+- **状态管理与组件通信**
+  - 用户信息（如 token、角色）使用 Pinia 的 `user` store 维护，Axios 拦截器会自动从 store 中注入 `Authorization` 头。
+  - 会话列表状态保存在 `AIChat.vue` 的本地 `ref` 中，不额外引入全局 store，降低复杂度。
+  - 新建会话后通过 `@chat-created` 事件将新建结果从 `ChatRecord` 传回 `AIChat`，统一更新左侧列表与当前选中 ID。
+
+- **流式输出实现**
+  - 真实模式：使用 `@microsoft/fetch-event-source` 连接 SSE 接口 `/api/v1/assistant/chat`，逐条接收数据片段，通过 `onChunk` 回调写入缓冲区，并以定时器实现打字机效果。
+  - 开发模式：如果是 `import.meta.env.DEV`，`sendMessage` 会读取 `mock_chat_stream.json` 或预设长文本，模拟分片推送，UI 无需区分真实/Mock 来源。
+
+- **分页与滚动体验**
+  - 采用了无限滚动的加载方式，从而避免初次渲染时页面数据量过大导致的性能问题。
+  - `ChatRecord` 使用 `pageNum + pageSize + total` 管理分页，从后端按照“最新在前”的顺序拉取，再在前端反转为时间正序展示。
+  - 监听消息容器的 `scroll` 事件：
+    - 接近顶部时触发 `loadMoreMessages` 追加旧消息，并通过高度差修正 `scrollTop`，保证视口位置稳定。
+    - 接近底部时开启自动滚动；用户上滑一段距离后关闭自动滚动，避免阅读时被新消息打断。
+
+- **Markdown、代码高亮与复制功能**
+  - 使用 `marked + DOMPurify` 解析并安全渲染 Markdown 内容。
+  - 使用 `highlight.js` 对代码块进行高亮，并为每个代码块注入“复制”按钮，通过 `navigator.clipboard` 实现一键复制。
+  - 普通消息也提供复制按钮，用户可以方便地复用历史问题或回答。
